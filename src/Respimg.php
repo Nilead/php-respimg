@@ -153,12 +153,19 @@
 		 * @param	integer	$columns		The number of columns in the output image. 0 = maintain aspect ratio based on $rows.
 		 * @param	integer	$rows			The number of rows in the output image. 0 = maintain aspect ratio based on $columns.
 		 * @param	bool	$optim			Whether you intend to perform optimization on the resulting image. Note that setting this to `true` doesn’t actually perform any optimization.
+		 * @param       string  $filter                 The filter to use when generating thumbnail image
+		 * @param       bool    $bestfit                Treat $columns and $rows as a bounding box in which to fit the image.
+		 * @param       bool    $crop                   Whether you want to crop the image
 		 */
-
-		public function smartResize($columns, $rows, $optim = false) {
+		public function smartResize($columns, $rows, $optim = false, $filter = \Imagick::FILTER_TRIANGLE, $bestfit = false, $crop = false) {
 
 			$this->setOption('filter:support', '2.0');
-			$this->thumbnailImage($columns, $rows, false, false, \Imagick::FILTER_TRIANGLE);
+			$this->thumbnailImage($columns, $rows, $bestfit, false, $filter);
+			
+			if ($crop) {
+				$this->cropThumbnailImage($columns, $rows);
+			}	
+			
 			if ($optim) {
 				$this->unsharpMaskImage(0.25, 0.08, 8.3, 0.045);
 			} else {
@@ -183,7 +190,8 @@
 		/**
 		 * Changes the size of an image to the given dimensions and removes any associated profiles.
 		 *
-		 * `thumbnailImage` changes the size of an image to the given dimensions and
+		 * `
+		 ` changes the size of an image to the given dimensions and
 		 * removes any associated profiles.  The goal is to produce small low cost
 		 * thumbnail images suited for display on the Web.
 		 *
