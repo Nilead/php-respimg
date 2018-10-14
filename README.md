@@ -63,28 +63,14 @@ if ($dir = opendir($input_path)) {
 nwtn\Respimg::optimize($output_path, 0, 1, 1, 1);
 ```
 
-To resize a directory of raster images and SVGs and maintain aspect ratio, with optimization:
-
-```php
-$exts = array('jpeg', 'jpg', 'png');
-if ($dir = opendir($input_path)) {
-	while (($file = readdir($dir)) !== false) {
-		$base = pathinfo($file, PATHINFO_BASENAME);
-		$ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-		if (in_array($ext, $exts)) {
-			$image = new nwtn\Respimg($input_path . '/' . $file);
-			$image->smartResize($width, 0, true);
-			$image->writeImage($output_path . '/' . $base . '-w' . $w . '.' . $ext);
-		} elseif ($ext === 'svg') {
-			copy($input_path . '/' . $file, $output_path . '/' . $file);
-			nwtn\Respimg::rasterize($input_path . '/' . $file, $output_path . '/', $width, 0);
-		}
-	}
-}
-nwtn\Respimg::optimize($output_path, 3, 1, 1, 1);
-```
+SVG rasterize is removed from this fork.
 
 ## Release History
+
+### 2.0.0
+
+* Various minor improvments for smartResize
+* Removed SVG rasterize
 
 ### 1.0.1
 
