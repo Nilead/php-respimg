@@ -190,10 +190,7 @@
 		/**
 		 * Changes the size of an image to the given dimensions and removes any associated profiles.
 		 *
-		 * `
-		 ` changes the size of an image to the given dimensions and
-		 * removes any associated profiles.  The goal is to produce small low cost
-		 * thumbnail images suited for display on the Web.
+		 * The goal is to produce small low cost thumbnail images suited for display on the Web.
 		 *
 		 * With the original Imagick thumbnailImage implementation, there is no way to choose a
 		 * resampling filter. This class recreates Imagick’s C implementation and adds this
